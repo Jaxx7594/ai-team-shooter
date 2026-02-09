@@ -1,0 +1,42 @@
+# Example: Large battle configuration
+# Use with: python play.py --config examples/large_battle.yaml
+
+game:
+  window_width: 1200
+  window_height: 800
+  fps: 60
+  
+environment:
+  map_width: 1200
+  map_height: 800
+  num_obstacles: 20
+  obstacle_min_size: 40
+  obstacle_max_size: 100
+  
+teams:
+  num_teams: 3
+  agents_per_team: 5
+  
+agent:
+  size: 20
+  speed: 3
+  health: 120
+  bullet_damage: 25
+  bullet_speed: 10
+  bullet_cooldown: 25
+  view_distance: 350
+  
+training:
+  total_timesteps: 2000000
+  save_freq: 20000
+  model_path: "models/large_battle_agent"
+  log_path: "logs/"
+  
+colors:
+  background: [40, 40, 45]
+  team1: [0, 120, 255]
+  team2: [255, 100, 0]
+  obstacle: [80, 80, 85]
+  bullet: [255, 255, 100]
+  health_bar_bg: [255, 0, 0]
+  health_bar_fg: [0, 255, 0]

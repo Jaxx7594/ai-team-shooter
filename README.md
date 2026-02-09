@@ -2,6 +2,10 @@
 
 A top-down shooter game where AI agents learn to battle in teams using reinforcement learning. The game features configurable environments, team sizes, and allows humans to play against trained AI agents.
 
+![AI Team Shooter Gameplay](https://github.com/user-attachments/assets/92750c74-4d91-4c7e-9385-906975221fa6)
+
+*Screenshot showing AI teams (blue and orange) battling in a procedurally generated environment with obstacles and cover.*
+
 ## Features
 
 - **Top-down shooter gameplay** with team-based combat
@@ -165,6 +169,20 @@ Each agent can:
 - -0.01 per timestep (encourages engagement)
 
 ## Examples
+
+### Use Example Configurations
+
+The `examples/` directory contains pre-configured scenarios:
+
+**Large Battle** (3 teams, 5 agents each, 20 obstacles):
+```bash
+python play.py --config examples/large_battle.yaml
+```
+
+**Small Skirmish** (2 teams, 2 agents each, 5 obstacles):
+```bash
+python demo.py --config examples/small_skirmish.yaml
+```
 
 ### Create a custom configuration
 
