@@ -1,1 +1,1 @@
-# ai-team-shooter
+# AI Team Shooter - Multi-Agent RL Project
