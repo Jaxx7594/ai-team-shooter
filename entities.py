@@ -26,8 +26,8 @@ class Bullet:
         
     def get_rect(self) -> pygame.Rect:
         """Get collision rectangle."""
-        return pygame.Rect(self.x - self.radius, self.y - self.radius, 
-                          self.radius * 2, self.radius * 2)
+        return pygame.Rect(int(self.x - self.radius), int(self.y - self.radius), 
+                          int(self.radius * 2), int(self.radius * 2))
 
 
 class Agent:
@@ -55,8 +55,16 @@ class Agent:
         self.cooldown_timer = 0
         self.alive = True
         
-        # Color based on team
-        self.color = config['colors'][f'team{team_id + 1}']
+        # Color based on team (cycle through available team colors or generate)
+        team_colors = {
+            0: config['colors'].get('team1', [0, 100, 255]),
+            1: config['colors'].get('team2', [255, 100, 0]),
+            2: [0, 255, 100],
+            3: [255, 0, 255],
+            4: [255, 255, 0],
+            5: [0, 255, 255],
+        }
+        self.color = team_colors.get(team_id, [128, 128, 128])
         
     def update(self, action: Optional[np.ndarray] = None):
         """Update agent state based on action."""
@@ -75,7 +83,8 @@ class Agent:
         new_y = self.y + dy * self.speed
         
         # Create potential new rectangle
-        new_rect = pygame.Rect(new_x - self.size/2, new_y - self.size/2, self.size, self.size)
+        new_rect = pygame.Rect(int(new_x - self.size/2), int(new_y - self.size/2), 
+                              int(self.size), int(self.size))
         
         # Check collisions with obstacles
         can_move_x = True
@@ -84,12 +93,14 @@ class Agent:
         for obstacle in obstacles:
             if new_rect.colliderect(obstacle.rect):
                 # Check X collision
-                test_rect_x = pygame.Rect(new_x - self.size/2, self.y - self.size/2, self.size, self.size)
+                test_rect_x = pygame.Rect(int(new_x - self.size/2), int(self.y - self.size/2), 
+                                         int(self.size), int(self.size))
                 if test_rect_x.colliderect(obstacle.rect):
                     can_move_x = False
                     
                 # Check Y collision
-                test_rect_y = pygame.Rect(self.x - self.size/2, new_y - self.size/2, self.size, self.size)
+                test_rect_y = pygame.Rect(int(self.x - self.size/2), int(new_y - self.size/2), 
+                                         int(self.size), int(self.size))
                 if test_rect_y.colliderect(obstacle.rect):
                     can_move_y = False
                     
@@ -98,11 +109,13 @@ class Agent:
             if other.alive and other != self:
                 other_rect = other.get_rect()
                 if new_rect.colliderect(other_rect):
-                    test_rect_x = pygame.Rect(new_x - self.size/2, self.y - self.size/2, self.size, self.size)
+                    test_rect_x = pygame.Rect(int(new_x - self.size/2), int(self.y - self.size/2), 
+                                             int(self.size), int(self.size))
                     if test_rect_x.colliderect(other_rect):
                         can_move_x = False
                         
-                    test_rect_y = pygame.Rect(self.x - self.size/2, new_y - self.size/2, self.size, self.size)
+                    test_rect_y = pygame.Rect(int(self.x - self.size/2), int(new_y - self.size/2), 
+                                             int(self.size), int(self.size))
                     if test_rect_y.colliderect(other_rect):
                         can_move_y = False
         
@@ -140,7 +153,8 @@ class Agent:
             
     def get_rect(self) -> pygame.Rect:
         """Get collision rectangle."""
-        return pygame.Rect(self.x - self.size/2, self.y - self.size/2, self.size, self.size)
+        return pygame.Rect(int(self.x - self.size/2), int(self.y - self.size/2), 
+                          int(self.size), int(self.size))
         
     def draw(self, screen: pygame.Surface):
         """Draw agent on screen."""
@@ -159,17 +173,17 @@ class Agent:
         # Draw health bar
         bar_width = self.size
         bar_height = 4
-        bar_x = self.x - bar_width / 2
-        bar_y = self.y - self.size / 2 - 8
+        bar_x = int(self.x - bar_width / 2)
+        bar_y = int(self.y - self.size / 2 - 8)
         
         # Background (red)
         pygame.draw.rect(screen, self.config['colors']['health_bar_bg'], 
-                        (bar_x, bar_y, bar_width, bar_height))
+                        (bar_x, bar_y, int(bar_width), int(bar_height)))
         
         # Foreground (green)
-        health_width = bar_width * (self.health / self.max_health)
+        health_width = int(bar_width * (self.health / self.max_health))
         pygame.draw.rect(screen, self.config['colors']['health_bar_fg'], 
-                        (bar_x, bar_y, health_width, bar_height))
+                        (bar_x, bar_y, health_width, int(bar_height)))
 
 
 class Obstacle:
