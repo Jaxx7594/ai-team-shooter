@@ -6,6 +6,8 @@ A top-down shooter game where AI agents learn to battle in teams using reinforce
 
 *Screenshot showing AI teams (blue and orange) battling in a procedurally generated environment with obstacles and cover.*
 
+> **Getting Started?** See [QUICKSTART.md](QUICKSTART.md) for installation help, especially if you get a `ModuleNotFoundError`.
+
 ## Features
 
 - **Top-down shooter gameplay** with team-based combat
