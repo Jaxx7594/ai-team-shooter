@@ -91,11 +91,25 @@ class ShooterEnv(gym.Env):
             
             self.obstacles.append(Obstacle(x, y, width, height, color))
             
+    def _is_valid_spawn_position(self, x: float, y: float, agent_size: int) -> bool:
+        """Check if a position is valid for spawning (not inside obstacles)."""
+        # Create a temporary rectangle for the agent at this position
+        agent_rect = pygame.Rect(int(x - agent_size/2), int(y - agent_size/2), 
+                                 int(agent_size), int(agent_size))
+        
+        # Check collision with all obstacles
+        for obstacle in self.obstacles:
+            if agent_rect.colliderect(obstacle.rect):
+                return False
+        
+        return True
+    
     def _spawn_agents(self):
         """Spawn agents for all teams."""
         self.agents = []
         map_width = self.config['environment']['map_width']
         map_height = self.config['environment']['map_height']
+        agent_size = self.config['agent']['size']
         
         for team_id in range(self.num_teams):
             # Spawn area for this team
@@ -107,9 +121,29 @@ class ShooterEnv(gym.Env):
                 spawn_y = map_height * 0.5
                 
             for agent_id in range(self.agents_per_team):
-                # Add some randomness to spawn position
-                x = spawn_x + random.randint(-50, 50)
-                y = spawn_y + random.randint(-50, 50)
+                # Try to find a valid spawn position
+                max_attempts = 100
+                x, y = spawn_x, spawn_y
+                
+                for attempt in range(max_attempts):
+                    # Add some randomness to spawn position
+                    x = spawn_x + random.randint(-50, 50)
+                    y = spawn_y + random.randint(-50, 50)
+                    
+                    # Ensure within map bounds
+                    x = max(agent_size/2, min(map_width - agent_size/2, x))
+                    y = max(agent_size/2, min(map_height - agent_size/2, y))
+                    
+                    # Check if position is valid (not in obstacle)
+                    if self._is_valid_spawn_position(x, y, agent_size):
+                        break
+                    
+                    # If we've tried many times, expand the search area
+                    if attempt > 50:
+                        x = spawn_x + random.randint(-100, 100)
+                        y = spawn_y + random.randint(-100, 100)
+                        x = max(agent_size/2, min(map_width - agent_size/2, x))
+                        y = max(agent_size/2, min(map_height - agent_size/2, y))
                 
                 agent = Agent(x, y, team_id, agent_id, self.config)
                 self.agents.append(agent)
