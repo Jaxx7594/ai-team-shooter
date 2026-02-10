@@ -5,7 +5,6 @@ import pygame
 import numpy as np
 import argparse
 import os
-import sys
 
 from environment import ShooterEnv
 from entities import Agent, Bullet

@@ -3,7 +3,6 @@ Demo script to watch AI vs AI battles.
 """
 import argparse
 import os
-import sys
 
 from environment import ShooterEnv
 
