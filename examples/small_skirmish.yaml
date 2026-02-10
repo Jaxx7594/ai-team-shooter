@@ -1,0 +1,42 @@
+# Example: Small skirmish configuration  
+# Use with: python play.py --config examples/small_skirmish.yaml
+
+game:
+  window_width: 600
+  window_height: 400
+  fps: 60
+  
+environment:
+  map_width: 600
+  map_height: 400
+  num_obstacles: 5
+  obstacle_min_size: 20
+  obstacle_max_size: 50
+  
+teams:
+  num_teams: 2
+  agents_per_team: 2
+  
+agent:
+  size: 18
+  speed: 4
+  health: 80
+  bullet_damage: 30
+  bullet_speed: 9
+  bullet_cooldown: 20
+  view_distance: 250
+  
+training:
+  total_timesteps: 500000
+  save_freq: 5000
+  model_path: "models/skirmish_agent"
+  log_path: "logs/"
+  
+colors:
+  background: [30, 50, 30]
+  team1: [100, 200, 100]
+  team2: [200, 100, 100]
+  obstacle: [60, 80, 60]
+  bullet: [255, 255, 200]
+  health_bar_bg: [150, 0, 0]
+  health_bar_fg: [0, 200, 0]

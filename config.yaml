@@ -1,0 +1,45 @@
+# Game Configuration
+game:
+  window_width: 800
+  window_height: 600
+  fps: 60
+  
+# Environment Configuration
+environment:
+  map_width: 800
+  map_height: 600
+  num_obstacles: 10
+  obstacle_min_size: 30
+  obstacle_max_size: 80
+  
+# Team Configuration
+teams:
+  num_teams: 2
+  agents_per_team: 3
+  
+# Agent Configuration
+agent:
+  size: 20
+  speed: 3
+  health: 100
+  bullet_damage: 20
+  bullet_speed: 8
+  bullet_cooldown: 30  # frames
+  view_distance: 300
+  
+# Training Configuration
+training:
+  total_timesteps: 1000000
+  save_freq: 10000
+  model_path: "models/shooter_agent"
+  log_path: "logs/"
+  
+# Colors (RGB)
+colors:
+  background: [50, 50, 50]
+  team1: [0, 100, 255]
+  team2: [255, 100, 0]
+  obstacle: [100, 100, 100]
+  bullet: [255, 255, 0]
+  health_bar_bg: [255, 0, 0]
+  health_bar_fg: [0, 255, 0]
