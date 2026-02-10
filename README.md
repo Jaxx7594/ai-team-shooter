@@ -31,9 +31,26 @@ cd ai-team-shooter
 ```
 
 2. Install dependencies:
+
+   **Option A: Full installation (for training AI models)**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
+   **Option B: Minimal installation (for playing only)**
+   ```bash
+   pip install pygame numpy pyyaml gymnasium
+   ```
+   
+   Note: Full installation includes PyTorch and stable-baselines3 which are large packages (~2GB). 
+   If you only want to play the game with simple AI opponents, use Option B.
+
+3. Verify installation:
 ```bash
-pip install -r requirements.txt
+python test_installation.py
 ```
+
+This will check if everything is working correctly and tell you if you can train AI models or just play the game.
 
 ## Quick Start
 
@@ -221,6 +238,36 @@ python demo.py --teams 4 --agents-per-team 5 --obstacles 15
 - Powerups and special abilities
 - Tournament mode
 - Replays and statistics
+
+## Troubleshooting
+
+### "ModuleNotFoundError: No module named 'stable_baselines3'"
+
+This means you haven't installed the training dependencies. You have two options:
+
+1. **Install training dependencies** (if you want to train AI models):
+   ```bash
+   pip install stable-baselines3 torch
+   ```
+   
+2. **Use without training** (play with simple AI only):
+   The game works fine without these packages. Just use `demo.py` or `play.py` without specifying an AI model.
+
+### "ModuleNotFoundError: No module named 'pygame'" or similar
+
+Install the basic dependencies:
+```bash
+pip install pygame numpy pyyaml gymnasium
+```
+
+### Verify your installation
+
+Run the test script to check what's working:
+```bash
+python test_installation.py
+```
+
+This will tell you exactly which features are available.
 
 ## License
 

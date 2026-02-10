@@ -3,9 +3,21 @@ Training script for AI agents using reinforcement learning.
 """
 import argparse
 import os
-from stable_baselines3 import PPO
-from stable_baselines3.common.callbacks import CheckpointCallback
-from stable_baselines3.common.vec_env import DummyVecEnv
+import sys
+
+# Check for required dependencies
+try:
+    from stable_baselines3 import PPO
+    from stable_baselines3.common.callbacks import CheckpointCallback
+    from stable_baselines3.common.vec_env import DummyVecEnv
+except ImportError as e:
+    print("Error: Missing required dependencies for training.")
+    print(f"\nImport error: {e}")
+    print("\nPlease install the required packages:")
+    print("  pip install -r requirements.txt")
+    print("\nOr install them individually:")
+    print("  pip install stable-baselines3 torch")
+    sys.exit(1)
 
 from environment import ShooterEnv
 

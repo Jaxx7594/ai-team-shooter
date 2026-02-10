@@ -3,7 +3,7 @@ Demo script to watch AI vs AI battles.
 """
 import argparse
 import os
-from stable_baselines3 import PPO
+import sys
 
 from environment import ShooterEnv
 
@@ -38,8 +38,14 @@ def demo(config_path: str = 'config.yaml',
     # Load AI model if provided
     ai_model = None
     if ai_model_path and os.path.exists(ai_model_path + '.zip'):
-        print(f"Loading AI model from {ai_model_path}")
-        ai_model = PPO.load(ai_model_path)
+        try:
+            from stable_baselines3 import PPO
+            print(f"Loading AI model from {ai_model_path}")
+            ai_model = PPO.load(ai_model_path)
+        except ImportError:
+            print("Warning: stable-baselines3 not installed. Cannot load AI model.")
+            print("Install with: pip install stable-baselines3 torch")
+            print("Falling back to simple AI.")
     else:
         print("No AI model loaded, using simple AI for all agents")
         

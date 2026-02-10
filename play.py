@@ -5,7 +5,7 @@ import pygame
 import numpy as np
 import argparse
 import os
-from stable_baselines3 import PPO
+import sys
 
 from environment import ShooterEnv
 from entities import Agent, Bullet
@@ -42,8 +42,14 @@ class HumanVsAIGame:
         # Load AI model if provided
         self.ai_model = None
         if ai_model_path and os.path.exists(ai_model_path + '.zip'):
-            print(f"Loading AI model from {ai_model_path}")
-            self.ai_model = PPO.load(ai_model_path)
+            try:
+                from stable_baselines3 import PPO
+                print(f"Loading AI model from {ai_model_path}")
+                self.ai_model = PPO.load(ai_model_path)
+            except ImportError:
+                print("Warning: stable-baselines3 not installed. Cannot load AI model.")
+                print("Install with: pip install stable-baselines3 torch")
+                print("Falling back to simple AI.")
         else:
             print("No AI model loaded, using simple AI for opponents")
             
