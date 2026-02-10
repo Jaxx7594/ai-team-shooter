@@ -39,7 +39,9 @@ def train(config_path: str = 'config.yaml',
     """
     
     # Create directories
-    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    model_dir = os.path.dirname(model_path)
+    if model_dir:  # Only create if there's actually a directory
+        os.makedirs(model_dir, exist_ok=True)
     os.makedirs('logs', exist_ok=True)
     
     # Create environment
